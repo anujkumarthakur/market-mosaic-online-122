@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import Stocks from "./pages/Stocks";
 import Markets from "./pages/Markets";
 import Currencies from "./pages/Currencies";
+import Crypto from "./pages/Crypto";
 import Global from "./pages/Global";
 import Portfolio from "./pages/Portfolio";
 import Performance from "./pages/Performance";
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/stocks" element={<Stocks />} />
           <Route path="/markets" element={<Markets />} />
           <Route path="/currencies" element={<Currencies />} />
+          <Route path="/crypto" element={<Crypto />} />
           <Route path="/global" element={<Global />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/performance" element={<Performance />} />
