@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, Treemap, LineChart, Line } from 'recharts';
@@ -38,8 +37,8 @@ const Analysis = () => {
   const stockGrowthData = mockStocks
     .map(stock => ({
       name: stock.symbol,
-      value: Math.abs(stock.changePercent),
-      changePercent: stock.changePercent
+      value: Math.abs(stock.changePercent || 0),
+      changePercent: stock.changePercent || 0
     }))
     .sort((a, b) => b.changePercent - a.changePercent);
   
@@ -73,13 +72,16 @@ const Analysis = () => {
   
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'];
   
-  // Custom content for the treemap
+  // Custom content for the treemap - Fixed to handle undefined changePercent
   const CustomizedContent = (props: any) => {
     const { root, depth, x, y, width, height, index, name, changePercent, value } = props;
     
+    // Safely handle changePercent - provide default value if undefined
+    const safeChangePercent = changePercent || 0;
+    
     // Color based on change percent (green for positive, red for negative)
-    const color = changePercent >= 0 ? "#4ade80" : "#f87171";
-    const cellValue = changePercent >= 0 ? `+${changePercent.toFixed(2)}%` : `${changePercent.toFixed(2)}%`;
+    const color = safeChangePercent >= 0 ? "#4ade80" : "#f87171";
+    const cellValue = safeChangePercent >= 0 ? `+${safeChangePercent.toFixed(2)}%` : `${safeChangePercent.toFixed(2)}%`;
 
     return (
       <g>
