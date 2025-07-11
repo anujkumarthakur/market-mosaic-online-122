@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Cryptocurrency, formatCurrency, formatPercentage } from '@/utils/stocksApi';
 import { Bitcoin, TrendingUp, TrendingDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useNavigate } from 'react-router-dom';
 
 interface CryptoMarketProps {
   cryptos: Cryptocurrency[];
@@ -11,6 +12,8 @@ interface CryptoMarketProps {
 }
 
 export function CryptoMarket({ cryptos, className }: CryptoMarketProps) {
+  const navigate = useNavigate();
+  
   return (
     <Card className={cn("", className)}>
       <CardHeader>
@@ -24,7 +27,8 @@ export function CryptoMarket({ cryptos, className }: CryptoMarketProps) {
           {cryptos.slice(0, 8).map((crypto) => (
             <div
               key={crypto.symbol}
-              className="flex items-center justify-between p-3 rounded-lg border hover:bg-muted/50 transition-colors"
+              className="flex items-center justify-between p-3 rounded-lg border hover:bg-muted/50 transition-colors cursor-pointer"
+              onClick={() => navigate(`/crypto/${crypto.symbol.toLowerCase()}`)}
             >
               <div className="flex items-center gap-3">
                 <div className="flex flex-col">

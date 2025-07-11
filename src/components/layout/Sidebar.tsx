@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
   BarChart, PieChart, BarChart3, Wallet, LineChart, Globe, 
-  DollarSign, Settings, ChevronRight, ChevronLeft, Home, Bitcoin
+  DollarSign, Settings, ChevronRight, ChevronLeft, Home, Bitcoin, Flame, TrendingUp
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -48,6 +48,16 @@ export function Sidebar({ isCollapsed, onToggle, className }: SidebarProps) {
       title: 'Cryptocurrency',
       icon: Bitcoin,
       href: '/crypto',
+    },
+    {
+      title: 'Market Cap',
+      icon: BarChart3,
+      href: '/crypto-market-cap',
+    },
+    {
+      title: 'Trending',
+      icon: Flame,
+      href: '/crypto-trending',
     },
     {
       title: 'Global',
