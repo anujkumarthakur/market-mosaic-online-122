@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { TrendingUp, TrendingDown, Flame, Rocket, Clock } from "lucide-react";
 import { useState } from "react";
+import TokenDetailModal from "@/components/crypto/TokenDetailModal";
 
 const timeFilters = [
   { label: "1m", value: "1m", key: "change1m" },
@@ -180,10 +181,11 @@ const ethereumMemeCoins = [
   }
 ];
 
-const MemeCoinsTable = ({ coins, chainName, selectedTimeFilter }: { 
+const MemeCoinsTable = ({ coins, chainName, selectedTimeFilter, onTradeClick }: { 
   coins: typeof solanaMemeCoins, 
   chainName: string,
-  selectedTimeFilter: string 
+  selectedTimeFilter: string,
+  onTradeClick: (token: typeof solanaMemeCoins[0]) => void
 }) => {
   const currentFilter = timeFilters.find(f => f.value === selectedTimeFilter);
   const changeKey = currentFilter?.key || "change24h";
@@ -242,7 +244,11 @@ const MemeCoinsTable = ({ coins, chainName, selectedTimeFilter }: {
                 <td className="text-right py-4 px-2 font-mono">{coin.marketCap}</td>
                 <td className="text-right py-4 px-2 font-mono">{coin.volume}</td>
                 <td className="text-center py-4 px-2">
-                  <Button variant="outline" size="sm">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => onTradeClick(coin)}
+                  >
                     <Rocket className="h-4 w-4 mr-1" />
                     Trade
                   </Button>
@@ -258,6 +264,15 @@ const MemeCoinsTable = ({ coins, chainName, selectedTimeFilter }: {
 };
 export default function MemeCoins() {
   const [selectedTimeFilter, setSelectedTimeFilter] = useState("1d");
+  const [selectedToken, setSelectedToken] = useState<typeof solanaMemeCoins[0] | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalChainName, setModalChainName] = useState("");
+
+  const handleTradeClick = (token: typeof solanaMemeCoins[0], chainName: string) => {
+    setSelectedToken(token);
+    setModalChainName(chainName);
+    setIsModalOpen(true);
+  };
   
   return (
     <div className="container mx-auto p-6 space-y-8">
@@ -297,8 +312,18 @@ export default function MemeCoins() {
       </div>
 
       <div className="grid gap-8">
-        <MemeCoinsTable coins={solanaMemeCoins} chainName="Solana" selectedTimeFilter={selectedTimeFilter} />
-        <MemeCoinsTable coins={ethereumMemeCoins} chainName="Ethereum" selectedTimeFilter={selectedTimeFilter} />
+        <MemeCoinsTable 
+          coins={solanaMemeCoins} 
+          chainName="Solana" 
+          selectedTimeFilter={selectedTimeFilter}
+          onTradeClick={(token) => handleTradeClick(token, "Solana")}
+        />
+        <MemeCoinsTable 
+          coins={ethereumMemeCoins} 
+          chainName="Ethereum" 
+          selectedTimeFilter={selectedTimeFilter}
+          onTradeClick={(token) => handleTradeClick(token, "Ethereum")}
+        />
       </div>
 
       <Card className="bg-gradient-to-r from-orange-500/10 to-red-500/10 border-orange-500/20">
@@ -314,6 +339,13 @@ export default function MemeCoins() {
           </p>
         </CardContent>
       </Card>
+
+      <TokenDetailModal
+        token={selectedToken}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        chainName={modalChainName}
+      />
     </div>
   );
-}
+};
