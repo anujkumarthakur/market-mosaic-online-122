@@ -60,6 +60,11 @@ export function Sidebar({ isCollapsed, onToggle, className }: SidebarProps) {
       href: '/crypto-trending',
     },
     {
+      title: 'Meme Coins',
+      icon: TrendingUp,
+      href: '/crypto-meme',
+    },
+    {
       title: 'Global',
       icon: Globe,
       href: '/global',

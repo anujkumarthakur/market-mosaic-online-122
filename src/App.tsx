@@ -13,6 +13,7 @@ import Crypto from "./pages/Crypto";
 import CryptoDetail from "./pages/CryptoDetail";
 import CryptoMarketCap from "./pages/CryptoMarketCap";
 import CryptoTrending from "./pages/CryptoTrending";
+import MemeCoins from "./pages/MemeCoins";
 import Global from "./pages/Global";
 import Portfolio from "./pages/Portfolio";
 import Performance from "./pages/Performance";
@@ -36,6 +37,7 @@ const App = () => (
           <Route path="/crypto/:symbol" element={<CryptoDetail />} />
           <Route path="/crypto-market-cap" element={<CryptoMarketCap />} />
           <Route path="/crypto-trending" element={<CryptoTrending />} />
+          <Route path="/crypto-meme" element={<MemeCoins />} />
           <Route path="/global" element={<Global />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/performance" element={<Performance />} />
